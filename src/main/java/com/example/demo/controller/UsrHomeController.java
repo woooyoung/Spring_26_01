@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -7,46 +12,48 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class UsrHomeController {
 
-	int count;
+	@RequestMapping("/usr/home/getList")
+	@ResponseBody
+	public List<String> getList() {
+		List<String> list = new ArrayList<>();
+		list.add("철수 나이");
+		list.add("영수 나이");
 
-	public UsrHomeController() {
-		count = 0;
+		return list;
 	}
 
-	@RequestMapping("/usr/home/setCountValue")
+	@RequestMapping("/usr/home/getMap")
 	@ResponseBody
-	public String setCountValue(int value) {
-		this.count = value;
-		return "count 값 " + value + "(으)로 초기화";
+	public Map<String, Object> getMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("철수 나이", 12);
+		map.put("영수 나이", 13);
+
+		return map;
 	}
 
-	@RequestMapping("/usr/home/setCount")
+	@RequestMapping("/usr/home/getDouble")
 	@ResponseBody
-	public String setCount() {
-		count = 0;
-		return "count 값 0으로 초기화";
+	public double getDouble() {
+		return 3.14;
 	}
 
-	@RequestMapping("/usr/home/getCount")
+	@RequestMapping("/usr/home/getBoolean")
 	@ResponseBody
-	public int getCount() {
-
-		return count++;
+	public boolean getBoolean() {
+		return true;
 	}
 
-	@RequestMapping("/usr/home/main2")
+	@RequestMapping("/usr/home/getString")
 	@ResponseBody
-	public String showMain2() {
-		return "잘가";
+	public String getString() {
+		return "abc";
 	}
 
-	@RequestMapping("/usr/home/main3")
+	@RequestMapping("/usr/home/getInt")
 	@ResponseBody
-	public int showMain3() {
-		int a = 1;
-		int b = 2;
-
-		return a + b;
+	public int getInt() {
+		return 100;
 	}
 
 }

@@ -1,59 +1,41 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.vo.Article;
+
 @Controller
 public class UsrHomeController {
 
-	@RequestMapping("/usr/home/getList")
-	@ResponseBody
-	public List<String> getList() {
-		List<String> list = new ArrayList<>();
-		list.add("철수 나이");
-		list.add("영수 나이");
+	int lastArticleId;
+	List<Article> articles;
 
-		return list;
+	public UsrHomeController() {
+		articles = new ArrayList<>();
+		lastArticleId = 0;
 	}
 
-	@RequestMapping("/usr/home/getMap")
+	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public Map<String, Object> getMap() {
-		Map<String, Object> map = new HashMap<>();
-		map.put("철수 나이", 12);
-		map.put("영수 나이", 13);
+	public Article doAdd(String title, String body) {
 
-		return map;
+		int id = lastArticleId + 1;
+
+		Article article = new Article(id, title, body);
+		articles.add(article);
+		lastArticleId++; 
+
+		return article;
 	}
 
-	@RequestMapping("/usr/home/getDouble")
+	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public double getDouble() {
-		return 3.14;
+	public List<Article> getArticles() {
+		return articles;
 	}
-
-	@RequestMapping("/usr/home/getBoolean")
-	@ResponseBody
-	public boolean getBoolean() {
-		return true;
-	}
-
-	@RequestMapping("/usr/home/getString")
-	@ResponseBody
-	public String getString() {
-		return "abc";
-	}
-
-	@RequestMapping("/usr/home/getInt")
-	@ResponseBody
-	public int getInt() {
-		return 100;
-	}
-
 }

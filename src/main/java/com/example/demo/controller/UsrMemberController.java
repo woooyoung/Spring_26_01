@@ -19,6 +19,25 @@ public class UsrMemberController {
 	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 
+		if (loginId == null || loginId.trim().length() == 0) {
+			return "loginId 입력해";
+		}
+		if (loginPw == null || loginPw.trim().length() == 0) {
+			return "loginPw 입력해";
+		}
+		if (name == null || name.trim().length() == 0) {
+			return "name 입력해";
+		}
+		if (nickname == null || nickname.trim().length() == 0) {
+			return "nickname 입력해";
+		}
+		if (cellphoneNum == null || cellphoneNum.trim().length() == 0) {
+			return "cellphoneNum 입력해";
+		}
+		if (email == null || email.trim().length() == 0) {
+			return "email 입력해";
+		}
+
 		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (id == -1) {

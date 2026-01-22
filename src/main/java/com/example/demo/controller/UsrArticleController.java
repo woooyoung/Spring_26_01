@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,6 @@ public class UsrArticleController {
 
 	// 생성자
 	public UsrArticleController() {
-
-//		articleService = new ArticleService(); --> @Autowired로 대체 됨
 
 	}
 
@@ -78,6 +75,6 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
 	public List<Article> getArticles() {
-		return articleService.articles;
+		return articleService.getArticles();
 	}
 }

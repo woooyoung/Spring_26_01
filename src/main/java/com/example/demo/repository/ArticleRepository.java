@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.vo.Article;
 
@@ -16,6 +17,11 @@ public interface ArticleRepository {
 	public void deleteArticle(int id);
 
 //	@Update("UPDATE article SET updateDate = NOW(), title = #{title}, `body` = #{body} WHERE id = #{id}")
+//	@Update("""
+//			<script>
+//				
+//			</script>
+//			""")
 	public void modifyArticle(int id, String title, String body);
 
 //	@Select("SELECT * FROM article WHERE id = #{id}")

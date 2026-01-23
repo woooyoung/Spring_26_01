@@ -21,7 +21,7 @@ public class UsrArticleController {
 	// 액션메서드
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public ResultData getArticle(int id) {
+	public ResultData<Article> getArticle(int id) {
 
 		Article article = articleService.getArticleById(id);
 
@@ -34,42 +34,38 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public Object doModify(int id, String title, String body) {
-
-		System.out.println("id : " + id);
-		System.out.println("title : " + title);
-		System.out.println("body : " + body);
+	public ResultData<Article> doModify(int id, String title, String body) {
 
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
-			return id + "번 글은 없음";
+			return ResultData.from("F-1", Ut.f("%d번 게시글은 없어", id));
 		}
 
 		articleService.modifyArticle(id, title, body);
 		article = articleService.getArticleById(id);
 
-		return article;
+		return ResultData.from("S-1", Ut.f("%d번 게시글이 수정됨", id), article);
 	}
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(int id) {
+	public ResultData<Integer> doDelete(int id) {
 
 		Article article = articleService.getArticleById(id);
 
 		if (article == null) {
-			return id + "번 글은 없음";
+			return ResultData.from("F-1", Ut.f("%d번 게시글은 없어", id));
 		}
 
 		articleService.deleteArticle(id);
 
-		return id + "번 글이 삭제되었습니다";
+		return ResultData.from("S-1", Ut.f("%d번 게시글이 삭제됨", id), id);
 	}
 
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public ResultData getArticles() {
+	public ResultData<List<Article>> getArticles() {
 		List<Article> articles = articleService.getArticles();
 
 		return ResultData.from("S-1", Ut.f("게시글 목록"), articles);
@@ -77,7 +73,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public ResultData doWrite(String title, String body) {
+	public ResultData<Article> doWrite(String title, String body) {
 
 		if (Ut.isEmptyOrNull(title)) {
 			return ResultData.from("F-1", "제목써");

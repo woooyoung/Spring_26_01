@@ -18,7 +18,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 
 		if (Ut.isEmptyOrNull(loginId)) {
@@ -31,7 +31,7 @@ public class UsrMemberController {
 			return ResultData.from("F-3", "name 입력해");
 		}
 		if (Ut.isEmptyOrNull(nickname)) {
-			return ResultData.from("F-4", "nickname 입력해");
+			return ResultData.from("F-4", "nickname 입력해"); 
 		}
 		if (Ut.isEmptyOrNull(cellphoneNum)) {
 			return ResultData.from("F-5", "cellphoneNum 입력해");

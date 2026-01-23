@@ -29,7 +29,7 @@ public class Ut {
 		return false;
 	}
 
-	public static Object f(String string, Object... args) {
+	public static String f(String string, Object... args) {
 		return String.format(string, args);
 	}
 

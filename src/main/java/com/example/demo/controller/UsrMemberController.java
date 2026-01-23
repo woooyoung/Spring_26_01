@@ -42,11 +42,11 @@ public class UsrMemberController {
 		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (id == -1) {
-			return "이미 사용중인 loginId입니다";
+			return Ut.f("이미 사용중인 loginId(%s) 입니다", loginId);
 		}
 
 		if (id == -2) {
-			return "이미 사용중인 name과 email 입니다";
+			return Ut.f("이미 사용중인 name(%s)과 email(%s) 입니다", name, email);
 		}
 
 		Member member = memberService.getMemberById(id);

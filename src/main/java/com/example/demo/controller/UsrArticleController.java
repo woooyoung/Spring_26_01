@@ -27,10 +27,6 @@ public class UsrArticleController {
 
 		Article article = articleService.getArticleById(id);
 
-//		if (article == null) {
-//			return ResultData.from("F-1", Ut.f("%d번 게시글은 없어", id));
-//		}
-
 		model.addAttribute("article", article);
 
 		return "usr/article/detail";

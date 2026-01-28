@@ -18,6 +18,8 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object Handler) throws Exception {
 
+//		Rq rq = new Rq(req, resp);
+
 		rq.initBeforeActionInterceptor(); // rq 생성을 강제로 수행
 
 		return HandlerInterceptor.super.preHandle(req, resp, Handler);

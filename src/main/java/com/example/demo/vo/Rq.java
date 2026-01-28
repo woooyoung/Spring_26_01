@@ -12,19 +12,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
+import lombok.Setter;
 
 @Component
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Getter
+@Setter
 public class Rq {
 
-	@Getter
-	private boolean isLogined;
-	@Getter
-	private int loginedMemberId;
+	private boolean isLogined = false;
+	private int loginedMemberId = 0;
 
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
-
 	private HttpSession session;
 
 	public Rq(HttpServletRequest req, HttpServletResponse resp) {
@@ -36,7 +36,7 @@ public class Rq {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
-		
+
 		this.req.setAttribute("rq", this);
 	}
 
@@ -44,13 +44,19 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 
 		println("<script>");
+		
+		println("console.log(123);");
+		
 		if (!Ut.isEmpty(msg)) {
-			println("alert('" + msg + "');");
+			println("alert('" + msg.replace("'", "\\'") + "');");
 		}
+		
+		println("console.log(456);");
 
 		println("history.back();");
-
 		println("</script>");
+		resp.getWriter().flush();
+		resp.getWriter().close();
 	}
 
 	private void println(String str) throws IOException {

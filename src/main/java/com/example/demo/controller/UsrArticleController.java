@@ -20,6 +20,9 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UsrArticleController {
 
 	@Autowired
+	private Rq rq;
+
+	@Autowired
 	private ArticleService articleService;
 
 	// 액션메서드

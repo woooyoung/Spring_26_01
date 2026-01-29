@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.example.demo.interceptor.BeforeActionInterceptor;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.BoardService;
 import com.example.demo.util.Ut;
@@ -21,6 +22,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class UsrArticleController {
 
+	private final BeforeActionInterceptor beforeActionInterceptor;
+
 	@Autowired
 	private Rq rq;
 
@@ -29,6 +32,10 @@ public class UsrArticleController {
 
 	@Autowired
 	private BoardService boardService;
+
+	UsrArticleController(BeforeActionInterceptor beforeActionInterceptor) {
+		this.beforeActionInterceptor = beforeActionInterceptor;
+	}
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Model model, int id) {
@@ -110,13 +117,15 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, int boardId) {
+	public String showList(Model model, @RequestParam(defaultValue = "1") int boardId) {
 
 		Board board = boardService.getBoardById(boardId);
 
-		List<Article> articles = articleService.getArticles();
-		
-//		System.out.println(board);
+		if (board == null) {
+//			return rq.historyBackOnView("존재하지 않는 게시판입니다"); -> 흐름 따라가되 잘 안쓰는 방식
+		}
+
+		List<Article> articles = articleService.getForPrintArticles(boardId);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
@@ -132,7 +141,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpServletRequest req, String title, String body) {
+	public String doWrite(HttpServletRequest req, String title, String body, String boardId) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
@@ -143,7 +152,11 @@ public class UsrArticleController {
 			return Ut.jsHistoryBack("F-2", "내용써");
 		}
 
-		ResultData doWriteRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
+		if (Ut.isEmptyOrNull(boardId)) {
+			return Ut.jsHistoryBack("F-3", "게시판을 선택하세요");
+		}
+
+		ResultData doWriteRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body, boardId);
 
 		int id = (int) doWriteRd.getData1();
 

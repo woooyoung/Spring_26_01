@@ -140,7 +140,9 @@ public class UsrArticleController {
 		model.addAttribute("pagesCount", pagesCount);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("articles", articles);
+		model.addAttribute("boardId", boardId);
 		model.addAttribute("board", board);
+		model.addAttribute("page", page);
 
 		return "/usr/article/list";
 	}

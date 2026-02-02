@@ -47,7 +47,7 @@
 	<!-- 	동적 페이징 -->
 	<div class="flex justify-center mt-4">
 		<div class="btn-group join">
-			<c:set var="paginationLen" value="5" />
+			<c:set var="paginationLen" value="3" />
 			<c:set var="startPage" value="${page - paginationLen >= 1 ? page - paginationLen : 1}" />
 			<c:set var="endPage" value="${page + paginationLen <= pagesCount ?  page + paginationLen : pagesCount}" />
 
@@ -76,14 +76,14 @@
 	</div>
 
 	<!-- 	직관적인 페이징 -->
-	<div class="flex justify-center mt-4">
-		<div class="btn-group join">
+<!-- 	<div class="flex justify-center mt-4"> -->
+<!-- 		<div class="btn-group join"> -->
 
-			<c:forEach begin="1" end="${pagesCount }" var="i">
-				<a class="join-item btn btn-sm ${param.page == i ? 'btn-active' : ''}" href="?page=${i }&boardId=${param.boardId}">${i }</a>
-			</c:forEach>
-		</div>
-	</div>
+<%-- 			<c:forEach begin="1" end="${pagesCount }" var="i"> --%>
+<%-- 				<a class="join-item btn btn-sm ${param.page == i ? 'btn-active' : ''}" href="?page=${i }&boardId=${param.boardId}">${i }</a> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</div> -->
+<!-- 	</div> -->
 </section>
 
 <%@ include file="../common/foot.jspf"%>

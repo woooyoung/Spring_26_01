@@ -149,6 +149,8 @@ UPDATE article
 SET boardId = 3
 WHERE id = 5;
 
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `body`;
+
 DESC article;
 
 # -------------------SELECT 확인용
@@ -166,6 +168,46 @@ SELECT COUNT(*) FROM article;
 
 
 ##===============================###################### 테스트
+'111'
+
+SELECT COUNT(*) AS cnt
+FROM article
+WHERE boardId = 1 and title like '%111%';
+
+SELECT COUNT(*) AS cnt
+FROM article
+WHERE boardId = 1 AND `body` LIKE '%111%';
+
+SELECT *
+FROM article
+WHERE boardId = 2 AND title LIKE '%11%';
+
+SELECT *
+FROM article
+WHERE boardId = 2 AND `body` LIKE '%111%';
+
+SELECT *
+FROM article
+WHERE boardId = 1 AND title LIKE '%11%' or `body` LIKE '%11%';
+
+
+select count(*)
+from article
+where boardId = 1;
+
+SELECT *
+FROM article
+WHERE boardId = 2
+ORDER BY id DESC
+limit 0, 10;
+
+
+SELECT *
+FROM article
+WHERE boardId = 2
+ORDER BY id DESC
+LIMIT 10, 10;
+
 
 # article 대량생성 1
 INSERT INTO article
@@ -180,8 +222,8 @@ INSERT INTO article
 	(
 		regDate, updateDate, memberId, boardId, title, `body`
 	)
-SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 3) + 1, CONCAT('제목__',RAND()), CONCAT('내용__',RAND())
-FROM article;
+select now(), now(), floor(RAND() * 2) + 2, floor(RAND() * 3) + 1, concat('제목__',rand()), CONCAT('내용__',RAND())
+from article;
 
 
 # member 대량생성
@@ -208,9 +250,9 @@ SELECT *
 		FROM board
 		WHERE id = 4 AND delStatus = 0
 
-SELECT *
-FROM board
-WHERE id = 3;
+select *
+from board
+where id = 3;
 
 SELECT LAST_INSERT_ID();
 

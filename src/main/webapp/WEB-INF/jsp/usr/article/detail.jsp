@@ -32,6 +32,10 @@
 					<td style="text-align: center;">${article.boardId }</td>
 				</tr>
 				<tr>
+					<th style="text-align: center;">VIEW</th>
+					<td style="text-align: center;">${article.hitCount }</td>
+				</tr>
+				<tr>
 					<th style="text-align: center;">Title</th>
 					<td style="text-align: center;">${article.title }</td>
 				</tr>

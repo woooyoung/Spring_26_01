@@ -72,7 +72,8 @@
 
 	<update id="increaseHitCount" parameterType="int">
 		UPDATE article
-		SET hitCount = hitCount + 1
+		SET
+		hitCount = hitCount + 1
 		WHERE id = #{id}
 	</update>
 

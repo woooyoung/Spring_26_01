@@ -232,6 +232,91 @@ SELECT COUNT(*) FROM article;
 
 ##===============================###################### 테스트
 
+SELECT A.*, M.nickname AS extra__writer
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.memberId = M.id
+
+# join 버전
+SELECT A.*, M.nickname AS extra__writer,
+IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+IFNULL(SUM(IF(RP.point > 0, RP.point ,0)),0) AS extra__goodReactionPoint,
+IFNULL(SUM(IF(RP.point < 0, RP.point ,0)),0) AS extra__badReactionPoint
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+# join 버전
+SELECT A.*, M.nickname AS extra__writer,
+IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+IFNULL(SUM(IF(RP.point > 0, RP.point ,0)),0) AS extra__goodReactionPoint,
+IFNULL(SUM(IF(RP.point < 0, RP.point ,0)),0) AS extra__badReactionPoint
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+WHERE A.id = 1;
+
+
+
+# LEFT JOIN 버전
+SELECT A.*, M.nickname AS extra__writer, RP.point
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+
+# 서브쿼리 버전
+SELECT A.*,
+IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+IFNULL(SUM(IF(RP.point > 0, RP.point ,0)),0) AS extra__goodReactionPoint,
+IFNULL(SUM(IF(RP.point < 0, RP.point ,0)),0) AS extra__badReactionPoint
+FROM (
+	SELECT A.*, M.nickname AS extra__writer
+	FROM article AS A
+	INNER JOIN `member` AS M
+	ON A.memberId = M.id
+) AS A
+LEFT JOIN reactionPoint AS RP
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+GROUP BY A.id
+ORDER BY A.id DESC;
+
+
+
+SELECT A.*, M.nickname AS extra__writer, RP.point
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.memberId = M.id
+LEFT JOIN reactionPoint AS RP
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+WHERE A.id = 1;
+
+SELECT A.*, M.nickname AS extra__writer, RP.point
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.memberId = M.id
+INNER JOIN reactionPoint AS RP
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+WHERE A.id = 2;
+
+SELECT A.*, M.nickname AS extra__writer, RP.point
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.memberId = M.id
+INNER JOIN reactionPoint AS RP
+ON A.id = RP.relId AND RP.relTypeCode = 'article'
+WHERE A.id = 3;
+
 SELECT hitCount
 FROM article
 WHERE id = 1;

@@ -60,8 +60,10 @@
 				<tr>
 					<th style="text-align: center;">LIKE / DISLIKE</th>
 					<td style="text-align: center;">
-						<button class="btn btn-outline btn-success">👍 LIKE ${article.goodReactionPoint }</button>
-						<button class="btn btn-outline btn-error">👎 DISLIKE ${article.badReactionPoint }</button>
+						<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.currentUri}"
+							class="btn btn-outline btn-success">👍 LIKE ${article.goodReactionPoint }</a>
+						<a href="/usr/reactionPoint/doBadReaction" class="btn btn-outline btn-error">👎 DISLIKE
+							${article.badReactionPoint }</a>
 					</td>
 				<tr>
 					<th style="text-align: center;">VIEW</th>
